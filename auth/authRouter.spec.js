@@ -84,11 +84,13 @@ describe('Jokes', ()=>{
             .send({username:'theNewGuy', password:'passwordPlease'});
             const userLogin= await supertest(server).post('/api/auth/login')
             .send({username:'theNewGuy', password:'passwordPlease'});
-            console.log('token provided: ',userLogin.body.token);
+            //console.log('token provided: ',userLogin.body.token);
 
             const res = await supertest(server).get('/api/jokes')
-            .send('authorization', userLogin.body.token);
-            console.log('Get Jokes with token', res.body);
+            .set('authorization', userLogin.body.token);
+            //console.log('Get Jokes with token', res.body);
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveLength(20);
         })
     })
 })
