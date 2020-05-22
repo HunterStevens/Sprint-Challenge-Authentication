@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
     jwt.verify(token, secret, (error,decodedToken) =>{
       if(error){
-        res.status(401).json({message:'YOU SHALL NOT PASS HACKER!'})
+        res.status(404).json({message:'YOU SHALL NOT PASS HACKER!'})
       }else{
         req.jwt = decodedToken;
         next();

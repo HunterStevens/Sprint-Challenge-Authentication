@@ -63,10 +63,32 @@ describe('Users', ()=>{
 
             const res= await supertest(server).post('/api/auth/login')
             .send({username:'theNewGuy', password:'passwordPlease'});
-            console.log('correct login: ',res.body);
+            //console.log('correct login: ',res.body);
             expect(res.status).toBe(200);
             expect(res.body).toMatchObject({message:'login success'});
             expect(res.body).toHaveProperty('token');
+        })
+    })
+})
+
+describe('Jokes', ()=>{
+    describe('GET /Jokes', ()=>{
+        test('to see if it will return an error without proper authentication', async() =>{
+            const res = await supertest(server).get('/api/jokes');
+            //console.log('GET jokes without Authentication', res.body);
+            expect(res.status).toBe(400);
+            expect(res.body).toMatchObject({message:'please provide the authentication.'});
+        })
+        test('should return error with proper token', async()=>{
+            const newUser = await supertest(server).post('/api/auth/register')
+            .send({username:'theNewGuy', password:'passwordPlease'});
+            const userLogin= await supertest(server).post('/api/auth/login')
+            .send({username:'theNewGuy', password:'passwordPlease'});
+            console.log('token provided: ',userLogin.body.token);
+
+            const res = await supertest(server).get('/api/jokes')
+            .send('authorization', userLogin.body.token);
+            console.log('Get Jokes with token', res.body);
         })
     })
 })
