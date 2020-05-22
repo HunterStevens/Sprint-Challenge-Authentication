@@ -79,7 +79,7 @@ describe('Jokes', ()=>{
             expect(res.status).toBe(400);
             expect(res.body).toMatchObject({message:'please provide the authentication.'});
         })
-        test('should return error with proper token', async()=>{
+        test('should return the array with proper token', async()=>{
             const newUser = await supertest(server).post('/api/auth/register')
             .send({username:'theNewGuy', password:'passwordPlease'});
             const userLogin= await supertest(server).post('/api/auth/login')
