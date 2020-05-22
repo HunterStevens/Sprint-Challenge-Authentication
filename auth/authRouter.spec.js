@@ -64,8 +64,9 @@ describe('Users', ()=>{
             const res= await supertest(server).post('/api/auth/login')
             .send({username:'theNewGuy', password:'passwordPlease'});
             console.log('correct login: ',res.body);
-            expect(res.status).toBe(404);
-            expect(res.body).toMatchObject({message:'re-enter credentials. Correctly this time'});
+            expect(res.status).toBe(200);
+            expect(res.body).toMatchObject({message:'login success'});
+            expect(res.body).toHaveProperty('token');
         })
     })
 })
