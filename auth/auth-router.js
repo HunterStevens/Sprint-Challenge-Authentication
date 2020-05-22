@@ -15,7 +15,7 @@ router.post('/register', (req, res) => {
     creds.password = hash;
 
     users.addUser(creds).then(newUser =>{
-      console.log('newUser: ', newUser);
+      //console.log('newUser: ', newUser);
       res.status(201).json({message:'register success',
     data:newUser});
     }).catch(err => res.status(500).json(err.message));
@@ -36,7 +36,7 @@ router.post('/login', (req, res) => {
         res.status(200).json({message:'login success',
       data:found, token:token});
       }else{
-        res.status(401).json({message:'re-enter credentials. Correctly this time'});
+        res.status(404).json({message:'re-enter credentials. Correctly this time'});
       }
     }).catch(err =>res.status(500).json(err.message));
   }else{
