@@ -12,6 +12,10 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
+server.get('/', (req,res) =>{
+    res.status(200).json({message:'Welcome to the Dad-a-base for dad jokes'});
+})
+
 server.use('/api/auth', authRouter);
 server.use('/api/jokes', authenticate, jokesRouter);
 
